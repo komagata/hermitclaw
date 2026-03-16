@@ -30,7 +30,7 @@ module HermitClaw
           "--cpus=#{@cpu_limit}",
           "--network=#{@network}",
           '--read-only',
-          '--no-new-privileges',
+          '--security-opt=no-new-privileges',
           '--cap-drop=ALL',
           '--tmpfs=/tmp:size=10m',
           '--user=nobody'
