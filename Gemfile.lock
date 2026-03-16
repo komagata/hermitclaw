@@ -1,3 +1,14 @@
+PATH
+  remote: .
+  specs:
+    hermit_claw (0.1.0)
+      discordrb (~> 3.7)
+      dotenv (~> 3.0)
+      ruby_llm (~> 1.0)
+      rufus-scheduler (~> 3.9)
+      sqlite3 (~> 2.0)
+      webrick (~> 1.8)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -136,17 +147,12 @@ PLATFORMS
   arm64-darwin-25
 
 DEPENDENCIES
-  discordrb
-  dotenv
+  hermit_claw!
   minitest
   rake
   rubocop
   rubocop-minitest
   rubocop-rake
-  ruby_llm
-  rufus-scheduler
-  sqlite3
-  webrick
 
 BUNDLED WITH
    2.4.19

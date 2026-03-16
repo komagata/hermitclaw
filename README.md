@@ -31,29 +31,15 @@ While [OpenClaw](https://github.com/openclaw/openclaw) and [NanoClaw](https://gi
 ## Quick Start
 
 ```bash
-git clone https://github.com/komagata/hermitclaw.git
-cd hermitclaw
-bundle install
+gem install hermit_claw
+hermitclaw init my-bot
+cd my-bot
 ```
 
-### Configure
+Edit `.env` with your API keys, edit `SOUL.md` to define your character, then:
 
 ```bash
-cp config.example.yml config.yml
-cp SOUL.example.md SOUL.md
-```
-
-Create `.env`:
-
-```
-DISCORD_BOT_TOKEN=your_discord_bot_token
-ANTHROPIC_API_KEY=your_anthropic_api_key
-```
-
-### Run
-
-```bash
-bin/hermitclaw
+hermitclaw start
 ```
 
 Mention your bot on Discord and it will respond! 🐚
