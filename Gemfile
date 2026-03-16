@@ -7,3 +7,5 @@ gem "ruby_llm"
 gem "sqlite3"
 gem "dotenv"
 gem "rufus-scheduler"
+gem "rake", group: :test
+gem "minitest", group: :test
