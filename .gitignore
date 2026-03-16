@@ -1,0 +1,6 @@
+.env
+config.yml
+db/
+memories/users/
+SOUL.md
+SHARED_MEMORY.md

@@ -1,0 +1,13 @@
+llm:
+  provider: anthropic
+  model: claude-sonnet-4-20250514
+
+channels:
+  discord:
+    respond_to: mentions
+
+memory:
+  backend: sqlite
+  database: db/hermitclaw.sqlite3
+
+soul: SOUL.md
