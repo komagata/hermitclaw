@@ -22,10 +22,25 @@ module HermitClaw
       @scheduler = Scheduler.new(config: @config)
       @scheduler.start
 
-      discord = Channels::Discord.new(
-        token: @config.discord_token, agent: @agent, logger: @logger
-      )
-      discord.start
+      # Start webhook server if configured
+      if @config.data.dig("channels", "webhook")
+        @webhook = Channels::Webhook.new(
+          agent: @agent, config: @config.data, logger: @logger
+        )
+        @webhook.start
+      end
+
+      # Start Discord bot (blocking)
+      if @config.discord_token && !@config.discord_token.empty?
+        discord = Channels::Discord.new(
+          token: @config.discord_token, agent: @agent, logger: @logger
+        )
+        discord.start
+      else
+        # No Discord, keep process alive for webhook
+        puts "🐚 Running in webhook-only mode"
+        sleep
+      end
     end
   end
 end

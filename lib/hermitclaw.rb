@@ -8,6 +8,7 @@ require_relative "hermitclaw/memory/user"
 require_relative "hermitclaw/guardrails"
 require_relative "hermitclaw/agent"
 require_relative "hermitclaw/channels/discord"
+require_relative "hermitclaw/channels/webhook"
 require_relative "hermitclaw/scheduler"
 require_relative "hermitclaw/engine"
 

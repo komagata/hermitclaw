@@ -6,6 +6,9 @@ channels:
   discord:
     respond_to: mentions
 
+  # webhook:
+  #   port: 4567
+
 memory:
   backend: sqlite
   database: db/hermitclaw.sqlite3
