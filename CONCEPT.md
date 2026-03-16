@@ -28,7 +28,7 @@ While OpenClaw and NanoClaw are "personal AI assistants for yourself," HermitCla
          Discord ──→
         Telegram ──→    ┌──────────────┐
   Website notifications ──→ │              │
-  Comment replies ──→    │  One personality │  ← soul.md
+  Comment replies ──→    │  One personality │  ← SOUL.md
   Scheduled checks ──→  │  (HermitClaw)    │  ← memory
          Slack ──→    │              │
           API  ──→    └──────────────┘
@@ -41,7 +41,7 @@ Whether users talk on Discord or on your website, they meet the same personality
 
 ```
 ┌─────────────────────────────────────┐
-│  soul.md (personality — immutable)  │
+│  SOUL.md (personality — immutable)  │
 │  "I'm Pjoroid, the mascot of FBC…" │
 └─────────────────────────────────────┘
                  ▼
@@ -111,7 +111,7 @@ hermitclaw/
 │   │   │   └── webhook.rb      # Webhook (web app integration)
 │   │   ├── agent.rb            # LLM calls + tool execution
 │   │   ├── memory/
-│   │   │   ├── soul.rb         # soul.md loader
+│   │   │   ├── soul.rb         # SOUL.md loader
 │   │   │   ├── shared.rb       # Shared memory
 │   │   │   └── user.rb         # Per-user memory
 │   │   ├── sandbox/
@@ -121,7 +121,7 @@ hermitclaw/
 │   │   └── config.rb           # Config loader
 │   └── hermitclaw.rb
 ├── config.example.yml
-├── soul.example.md
+├── SOUL.example.md
 ├── Gemfile
 └── bin/
     └── hermitclaw
@@ -141,11 +141,11 @@ channels:
   discord:
     token: ${DISCORD_TOKEN}
 
-soul: soul.md
+soul: SOUL.md
 
 memory:
   backend: sqlite
-  shared: shared_memory.md    # Managed manually by admins
+  shared: SHARED_MEMORY.md    # Managed manually by admins
   user_dir: memories/users/   # Auto-accumulated
 
 sandbox:
@@ -174,7 +174,7 @@ integrations:
 
 1. **Restricted by default** — Only open what's needed
 2. **Non-existent capabilities can't be exploited** — No unnecessary tools in the codebase
-3. **Personality at the center** — Write a soul.md and it runs
+3. **Personality at the center** — Write a SOUL.md and it runs
 4. **Built for team operations** — Config files in Git, reviewed via PRs
 5. **Keep it small** — Aim for NanoClaw-level codebase size
 
@@ -183,7 +183,7 @@ integrations:
 ### v0.1 (MVP)
 - [ ] Discord integration (mention response)
 - [ ] LLM API integration (multi-model via RubyLLM)
-- [ ] 3-layer memory (soul.md / shared / user)
+- [ ] 3-layer memory (SOUL.md / shared / user)
 - [ ] Conversation history (SQLite)
 - [ ] Docker isolation
 - [ ] Scheduled tasks
