@@ -154,7 +154,6 @@ I'm the mascot of Example Corp.
 - [x] Guardrails (input blocking, output redaction, response truncation)
 - [x] RuboCop (rubocop-minitest, rubocop-rake)
 - [ ] Tools (agent-callable functions defined via config/Ruby classes)
-- [ ] Context caching (prompt caching for large knowledge bases)
 - [ ] Shared memory
 - [ ] Telegram integration
 - [ ] Scheduled tasks
