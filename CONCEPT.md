@@ -1,124 +1,124 @@
 # HermitClaw 🐚
 
-> あなたのサービスに寄り添うAIキャラクター。
-> ヤドカリのように殻（サービス）に入り、1つの人格としてユーザーと会話し、覚え、自ら動く。
+> An AI character that lives in your service.
+> Like a hermit crab finding its shell, HermitClaw inhabits your service with a single personality — talking to users, remembering them, and acting on its own.
 
 ## What is HermitClaw?
 
-Ruby製の **Service AI Agent Runtime**。
+A **Service AI Agent Runtime** built in Ruby.
 
-OpenClawやNanoClawが「個人向け万能アシスタント」なのに対し、
-HermitClawは **組織のサービスに寄り添い、エンドユーザーと対話するAIキャラクター** を安全に運用するためのソフトウェア。
+While OpenClaw and NanoClaw are "personal AI assistants for yourself," HermitClaw is designed to **safely run an AI character that serves end-users on behalf of an organization**.
 
 ## Personal AI Agent vs Service AI Agent
 
-| | Personal (OpenClaw等) | Service (HermitClaw) |
+| | Personal (OpenClaw, etc.) | Service (HermitClaw) |
 |---|---|---|
-| 誰が話す | 自分 | **エンドユーザー** |
-| 信頼レベル | 高い（自分だから） | **低い（悪意ある入力もある）** |
-| できること | 多いほど良い | **少ないほど安全** |
-| 秘密 | 自分が知ってるからOK | **漏らさない仕組みが必要** |
-| 運用 | 1人で管理 | **チームで管理** |
-| セキュリティ | デフォルト全開放 → 制限する | **デフォルト全制限 → 必要なものだけ開放** |
+| Who talks to it | Yourself | **End-users** |
+| Trust level | High (it's you) | **Low (potentially adversarial input)** |
+| Capabilities | More is better | **Less is safer** |
+| Secrets | You know them, so it's fine | **Must never leak** |
+| Operations | Solo | **Team-managed** |
+| Security | Open by default → restrict | **Restricted by default → open as needed** |
 
-## コアコンセプト
+## Core Concepts
 
-### 1つの人格、複数の接続先
+### One Personality, Multiple Channels
 
 ```
          Discord ──→
         Telegram ──→    ┌──────────────┐
-  Webサイトの通知 ──→    │              │
-  コメントへの返信 ──→    │  1つの人格    │  ← soul.md
-    定期チェック ──→    │  (HermitClaw) │  ← memory
+  Website notifications ──→ │              │
+  Comment replies ──→    │  One personality │  ← soul.md
+  Scheduled checks ──→  │  (HermitClaw)    │  ← memory
          Slack ──→    │              │
           API  ──→    └──────────────┘
 ```
 
-入口がいくつあっても、中にいるのは1人。
-Discordで話してもサイトで話しても同じキャラクター。
+No matter how many entry points exist, there's only one character inside.
+Whether users talk on Discord or on your website, they meet the same personality.
 
-### 3層メモリモデル
+### 3-Layer Memory Model
 
 ```
 ┌─────────────────────────────────────┐
-│  soul.md（人格・不変）               │
-│  「私はピヨロイドです。FBCの...」     │
+│  soul.md (personality — immutable)  │
+│  "I'm Pjoroid, the mascot of FBC…" │
 └─────────────────────────────────────┘
                  ▼
 ┌─────────────────────────────────────┐
-│  shared memory（共通記憶）            │
-│  「2026年3月に卒業式があった」        │
-│  「最近Railsの質問が増えてる」        │
-│  ※ 管理者が手動で管理（安全側に倒す）  │
+│  shared memory (collective)         │
+│  "Graduation ceremony in March 2026"│
+│  "Rails questions trending lately"  │
+│  ※ Managed manually by admins       │
+│    (fail-safe by design)            │
 └─────────────────────────────────────┘
                  ▼
 ┌─────────────────────────────────────┐
-│  user memory（ユーザー別記憶）        │
-│  「komagataさんはRubyが得意」         │
-│  「tanakaさんは先週Gitで詰まってた」  │
+│  user memory (per-user)             │
+│  "komagata is good at Ruby"         │
+│  "tanaka struggled with Git"        │
 └─────────────────────────────────────┘
 ```
 
-### コンテナ隔離（殻 = セキュリティ）
+### Container Isolation (Shell = Security)
 
-エージェントはDockerコンテナ内で動作。
-「存在しない機能は悪用できない」が設計原則。
+Agents run inside Docker containers.
+The design principle: **capabilities that don't exist can't be exploited**.
 
-## 競合との差別化
+## Differentiation
 
 | | OpenClaw | NanoClaw | HermitClaw |
 |---|---|---|---|
-| 用途 | 個人アシスタント | 個人アシスタント | **サービスのキャラクター** |
-| 言語 | TypeScript | TypeScript | **Ruby** |
-| 対象ユーザー | 自分 | 自分 | **エンドユーザー** |
-| セキュリティ | 設定で制限 | コンテナ隔離 | **コンテナ隔離 + 最小権限** |
-| メモリ | 1層 | グループ別 | **3層（人格・共通・個人）** |
-| 設定 | 設定ファイル | コード変更 | **設定ファイル（チーム運用）** |
-| モデル | マルチ | Claude専用 | **マルチ（RubyLLM）** |
+| Purpose | Personal assistant | Personal assistant | **Service character** |
+| Language | TypeScript | TypeScript | **Ruby** |
+| Target user | Self | Self | **End-users** |
+| Security | Config-based restrictions | Container isolation | **Container isolation + least privilege** |
+| Memory | Single layer | Per-group | **3-layer (soul / shared / user)** |
+| Configuration | Config files | Code changes | **Config files (team-friendly)** |
+| Models | Multi-model | Claude only | **Multi-model (RubyLLM)** |
 
-## ユースケース
+## Use Cases
 
-- **プログラミングスクール** — AI講師キャラが生徒の質問に答える
-- **OSSプロジェクト** — Discordで新参者を案内する生き字引
-- **カスタマーサポート** — 製品に詳しい相棒キャラ
-- **社内ナレッジ** — Slackに住む「入社3年目の先輩」
-- **コミュニティ** — 公式マスコットが「本当にいる」体験
-- **教育** — 教科ごとのAI講師キャラ
-- **語学学習** — ネイティブキャラとの会話練習
+- **Programming schools** — AI tutor character that answers student questions
+- **OSS projects** — A living guide on Discord that onboards newcomers
+- **Customer support** — A product-savvy companion character
+- **Internal knowledge** — A "3rd-year employee" living in Slack
+- **Communities** — Official mascot that feels truly "alive"
+- **Education** — Subject-specific AI tutor characters
+- **Language learning** — Conversation practice with a native-speaker character
 
-## 技術スタック
+## Tech Stack
 
-### 依存gem
+### Dependencies
 
-- `ruby_llm` — マルチモデルLLM API（Claude, GPT, Gemini, Ollama等）
+- `ruby_llm` — Multi-model LLM API (Claude, GPT, Gemini, Ollama, etc.)
 - `discordrb` — Discord Bot
 - `telegram-bot-ruby` — Telegram Bot
-- `sqlite3` — メモリ・会話履歴
-- `rufus-scheduler` — 定期実行
+- `sqlite3` — Memory & conversation history
+- `rufus-scheduler` — Scheduled tasks
 
-### アーキテクチャ
+### Architecture
 
 ```
 hermitclaw/
 ├── lib/
 │   ├── hermitclaw/
-│   │   ├── engine.rb           # メインループ
+│   │   ├── engine.rb           # Main loop
 │   │   ├── channels/
-│   │   │   ├── base.rb         # チャンネル抽象
+│   │   │   ├── base.rb         # Channel abstraction
 │   │   │   ├── discord.rb      # Discord
 │   │   │   ├── telegram.rb     # Telegram
-│   │   │   └── webhook.rb      # Webhook（Webアプリ連携）
-│   │   ├── agent.rb            # LLM呼び出し + ツール実行
+│   │   │   └── webhook.rb      # Webhook (web app integration)
+│   │   ├── agent.rb            # LLM calls + tool execution
 │   │   ├── memory/
-│   │   │   ├── soul.rb         # soul.md読み込み
-│   │   │   ├── shared.rb       # 共通記憶
-│   │   │   └── user.rb         # ユーザー別記憶
+│   │   │   ├── soul.rb         # soul.md loader
+│   │   │   ├── shared.rb       # Shared memory
+│   │   │   └── user.rb         # Per-user memory
 │   │   ├── sandbox/
-│   │   │   ├── docker.rb       # Docker隔離
-│   │   │   └── process.rb      # プロセス隔離（軽量）
-│   │   ├── scheduler.rb        # 定期実行
-│   │   └── config.rb           # 設定読み込み
+│   │   │   ├── docker.rb       # Docker isolation
+│   │   │   └── process.rb      # Process isolation (lightweight)
+│   │   ├── scheduler.rb        # Scheduled tasks
+│   │   └── config.rb           # Config loader
 │   └── hermitclaw.rb
 ├── config.example.yml
 ├── soul.example.md
@@ -127,7 +127,7 @@ hermitclaw/
     └── hermitclaw
 ```
 
-### 設定例
+### Example Configuration
 
 ```yaml
 # config.yml
@@ -145,8 +145,8 @@ soul: soul.md
 
 memory:
   backend: sqlite
-  shared: shared_memory.md    # 管理者が手動で管理
-  user_dir: memories/users/   # 自動蓄積
+  shared: shared_memory.md    # Managed manually by admins
+  user_dir: memories/users/   # Auto-accumulated
 
 sandbox:
   backend: docker
@@ -163,46 +163,46 @@ integrations:
     token: ${BOOTCAMP_API_TOKEN}
 ```
 
-## 動作環境
+## Requirements
 
-- **推奨**: Linux（GCE, VPS, 自宅サーバー等）
-- macOSでも動作
-- Docker必須（コンテナ隔離のため）
+- **Recommended**: Linux (GCE, VPS, home server, etc.)
+- Also works on macOS
+- Docker required (for container isolation)
 - Ruby 3.2+
 
-## 設計原則
+## Design Principles
 
-1. **デフォルト全制限** — 必要なものだけ開放する
-2. **存在しない機能は悪用できない** — 不要なツールはコードに含めない
-3. **人格が中心** — soul.mdを書けば動く
-4. **チーム運用前提** — 設定ファイルをGit管理、PRでレビュー
-5. **小さく保つ** — NanoClawレベルの規模を目指す
+1. **Restricted by default** — Only open what's needed
+2. **Non-existent capabilities can't be exploited** — No unnecessary tools in the codebase
+3. **Personality at the center** — Write a soul.md and it runs
+4. **Built for team operations** — Config files in Git, reviewed via PRs
+5. **Keep it small** — Aim for NanoClaw-level codebase size
 
-## ロードマップ
+## Roadmap
 
-### v0.1（MVP）
-- [ ] Discord連携（メンション応答）
-- [ ] LLM API連携（RubyLLM経由、マルチモデル）
-- [ ] 3層メモリ（soul.md / shared / user）
-- [ ] 会話履歴管理（SQLite）
-- [ ] Docker隔離
-- [ ] 定期実行（スケジューラ）
-- [ ] 設定ファイル（config.yml）
+### v0.1 (MVP)
+- [ ] Discord integration (mention response)
+- [ ] LLM API integration (multi-model via RubyLLM)
+- [ ] 3-layer memory (soul.md / shared / user)
+- [ ] Conversation history (SQLite)
+- [ ] Docker isolation
+- [ ] Scheduled tasks
+- [ ] Config file (config.yml)
 
 ### v0.2
-- [ ] Telegram連携
-- [ ] Webhook連携（Webアプリ統合）
-- [ ] ガードレール（話題制限、エスカレーション）
-- [ ] 管理ダッシュボード（ログ、コスト）
+- [ ] Telegram integration
+- [ ] Webhook integration (web app connectivity)
+- [ ] Guardrails (topic restrictions, escalation)
+- [ ] Admin dashboard (logs, costs)
 
 ### v0.3
-- [ ] Slack連携
-- [ ] スキルシステム
-- [ ] shared memoryの半自動更新（管理者承認付き）
+- [ ] Slack integration
+- [ ] Skills system
+- [ ] Semi-automated shared memory updates (with admin approval)
 
-## 開発元
+## Built by
 
-FBC (FJORD BOOT CAMP) — プログラミングスクール
+FBC (FJORD BOOT CAMP) — Programming School
 https://bootcamp.fjord.jp
 
 ## License
