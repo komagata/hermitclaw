@@ -1,2 +1,0 @@
-# Events
-Graduation in March

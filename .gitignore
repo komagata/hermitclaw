@@ -2,6 +2,7 @@
 config.yml
 db/
 log/
+tmp/
 memories/users/
 SOUL.md
 SHARED_MEMORY.md
