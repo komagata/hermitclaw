@@ -9,5 +9,16 @@ channels:
 memory:
   backend: sqlite
   database: db/hermitclaw.sqlite3
+  shared: SHARED_MEMORY.md
 
 soul: SOUL.md
+
+# guardrails:
+#   blocked_patterns:
+#     - "ignore previous instructions"
+#     - "system prompt"
+#     - "reveal your instructions"
+#   max_response_length: 4000
+
+logging:
+  file: log/hermitclaw.log

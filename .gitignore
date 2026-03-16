@@ -1,6 +1,7 @@
 .env
 config.yml
 db/
+log/
 memories/users/
 SOUL.md
 SHARED_MEMORY.md

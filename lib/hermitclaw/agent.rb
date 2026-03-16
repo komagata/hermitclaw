@@ -4,11 +4,12 @@ require "ruby_llm"
 
 module HermitClaw
   class Agent
-    def initialize(config:, soul:, shared:, user_memory:)
+    def initialize(config:, soul:, shared:, user_memory:, guardrails:)
       @config = config
       @soul = soul
       @shared = shared
       @user_memory = user_memory
+      @guardrails = guardrails
 
       RubyLLM.configure do |c|
         c.anthropic_api_key = config.anthropic_api_key
@@ -16,6 +17,10 @@ module HermitClaw
     end
 
     def respond(user_id:, message:)
+      # Check input guardrails
+      blocked = @guardrails.check_input(message)
+      return blocked if blocked
+
       @user_memory.store(user_id, "user", message)
       history = @user_memory.history(user_id)
 
@@ -30,6 +35,9 @@ module HermitClaw
       # Ask the latest message
       response = chat.ask(history.last[:content])
       content = response.content || "..."
+
+      # Check output guardrails
+      content = @guardrails.check_output(content)
 
       @user_memory.store(user_id, "assistant", content)
       content

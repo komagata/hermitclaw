@@ -19,5 +19,6 @@ module HermitClaw
     def db_path = data.dig("memory", "database") || "db/hermitclaw.sqlite3"
     def discord_token = ENV["DISCORD_BOT_TOKEN"]
     def anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+    def guardrails = data["guardrails"]
   end
 end
