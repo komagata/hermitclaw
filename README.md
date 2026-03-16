@@ -153,8 +153,10 @@ I'm the mascot of Example Corp.
 - [x] Webhook integration (web app connectivity)
 - [x] Guardrails (input blocking, output redaction, response truncation)
 - [x] RuboCop (rubocop-minitest, rubocop-rake)
-- [ ] Telegram integration
+- [ ] Tools (agent-callable functions defined via config/Ruby classes)
+- [ ] Context caching (prompt caching for large knowledge bases)
 - [ ] Shared memory
+- [ ] Telegram integration
 - [ ] Scheduled tasks
 - [ ] Admin dashboard
 
