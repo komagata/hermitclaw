@@ -5,6 +5,8 @@ require "discordrb"
 module HermitClaw
   module Channels
     class Discord
+      DISCORD_MAX_LENGTH = 2000
+
       def initialize(token:, agent:)
         @bot = Discordrb::Bot.new(
           token: token,
@@ -25,7 +27,7 @@ module HermitClaw
             message: content
           )
 
-          event.respond(response)
+          send_split(event, response)
         end
 
         puts "🐚 HermitClaw is online (Discord)"
@@ -40,6 +42,11 @@ module HermitClaw
 
       def strip_mentions(text)
         text.gsub(/<@!?\d+>/, "").strip
+      end
+
+      def send_split(event, text)
+        chunks = text.scan(/.{1,#{DISCORD_MAX_LENGTH}}/m)
+        chunks.each { |chunk| event.respond(chunk) }
       end
     end
   end
