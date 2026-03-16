@@ -25,7 +25,7 @@ While [OpenClaw](https://github.com/openclaw/openclaw) and [NanoClaw](https://gi
 - **One personality, multiple channels** — Discord, Telegram, webhooks (more coming)
 - **3-layer memory** — Soul (personality) + Shared (collective) + User (per-person)
 - **Multi-model** — Claude, GPT, Gemini, Ollama via [RubyLLM](https://rubyllm.com)
-- **Container isolation** — Docker-based sandboxing (planned)
+- **Container isolation** — Docker-based sandboxing for safe code execution
 - **Team-friendly** — Config files in Git, personality reviewed via PRs
 
 ## Quick Start
@@ -123,7 +123,7 @@ I'm the mascot of Example Corp.
 ## Requirements
 
 - Ruby 3.2+
-- Docker (for container isolation, planned)
+- Docker (for container isolation)
 - A Discord bot token
 - An LLM API key (Anthropic, OpenAI, etc.)
 
@@ -149,11 +149,12 @@ I'm the mascot of Example Corp.
 - [x] LLM API integration (multi-model via RubyLLM)
 - [x] Per-user conversation history (SQLite)
 - [x] SOUL.md personality definition
+- [x] Container isolation (Docker sandbox: read-only, cap-drop=ALL, no-new-privileges)
+- [x] Webhook integration (web app connectivity)
+- [x] Guardrails (input blocking, output redaction, response truncation)
+- [x] RuboCop (rubocop-minitest, rubocop-rake)
 - [ ] Telegram integration
-- [ ] Webhook integration (web app connectivity)
-- [ ] Container isolation (Docker)
 - [ ] Shared memory
-- [ ] Guardrails (topic restrictions, escalation)
 - [ ] Scheduled tasks
 - [ ] Admin dashboard
 
