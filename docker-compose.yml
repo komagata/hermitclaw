@@ -1,0 +1,22 @@
+services:
+  hermitclaw:
+    build: .
+    env_file: .env
+    volumes:
+      - ./SOUL.md:/app/SOUL.md:ro
+      - ./SHARED_MEMORY.md:/app/SHARED_MEMORY.md:ro
+      - ./config.yml:/app/config.yml:ro
+      - ./db:/app/db
+      - ./log:/app/log
+      - ./memories:/app/memories
+    ports:
+      - "${WEBHOOK_PORT:-4567}:4567"
+    restart: unless-stopped
+    # Security: drop all capabilities, read-only root filesystem
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp

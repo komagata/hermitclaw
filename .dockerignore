@@ -1,0 +1,10 @@
+.env
+.git
+db/
+log/
+tmp/
+test/
+memories/
+SOUL.md
+SHARED_MEMORY.md
+config.yml
