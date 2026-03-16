@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "open3"
-require "timeout"
+require 'open3'
+require 'timeout'
 
 module HermitClaw
   module Sandbox
@@ -26,9 +26,9 @@ module HermitClaw
           exit_code: status.exitstatus
         }
       rescue Timeout::Error
-        { stdout: "", stderr: "Execution timed out after #{timeout}s", success: false, exit_code: -1 }
-      rescue => e
-        { stdout: "", stderr: e.message, success: false, exit_code: -1 }
+        { stdout: '', stderr: "Execution timed out after #{timeout}s", success: false, exit_code: -1 }
+      rescue StandardError => e
+        { stdout: '', stderr: e.message, success: false, exit_code: -1 }
       end
     end
   end

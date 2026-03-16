@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "ruby_llm"
+require 'ruby_llm'
 
 module HermitClaw
   class Agent
@@ -21,7 +21,7 @@ module HermitClaw
       blocked = @guardrails.check_input(message)
       return blocked if blocked
 
-      @user_memory.store(user_id, "user", message)
+      @user_memory.store(user_id, 'user', message)
       history = @user_memory.history(user_id)
 
       chat = RubyLLM.chat(model: @config.llm_model)
@@ -34,15 +34,15 @@ module HermitClaw
 
       # Ask the latest message
       response = chat.ask(history.last[:content])
-      content = response.content || "..."
+      content = response.content || '...'
 
       # Check output guardrails
       content = @guardrails.check_output(content)
 
-      @user_memory.store(user_id, "assistant", content)
+      @user_memory.store(user_id, 'assistant', content)
       content
-    rescue => e
-      $stderr.puts "Error: #{e.class} #{e.message}"
+    rescue StandardError => e
+      warn "Error: #{e.class} #{e.message}"
       "Error: #{e.class} #{e.message}"[0..3999]
     end
 
@@ -50,9 +50,7 @@ module HermitClaw
 
     def system_prompt
       parts = [@soul.to_s]
-      unless @shared.empty?
-        parts << "\n## Shared Knowledge\n\n#{@shared}"
-      end
+      parts << "\n## Shared Knowledge\n\n#{@shared}" unless @shared.empty?
       parts.join("\n")
     end
   end

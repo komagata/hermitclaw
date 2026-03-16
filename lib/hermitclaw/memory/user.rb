@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "sqlite3"
-require "json"
-require "fileutils"
+require 'sqlite3'
+require 'json'
+require 'fileutils'
 
 module HermitClaw
   module Memory

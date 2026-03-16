@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rufus-scheduler"
+require 'rufus-scheduler'
 
 module HermitClaw
   class Scheduler
@@ -10,8 +10,8 @@ module HermitClaw
       @jobs = []
     end
 
-    def register(name, interval, &block)
-      job = @scheduler.every(interval, name: name, &block)
+    def register(name, interval, &)
+      job = @scheduler.every(interval, name: name, &)
       @jobs << job
       puts "📅 Scheduled: #{name} (every #{interval})"
     end

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "logger"
-require "fileutils"
+require 'logger'
+require 'fileutils'
 
 module HermitClaw
   class AppLogger
     def self.build(config = nil)
-      log_path = config&.dig("logging", "file") || "log/hermitclaw.log"
+      log_path = config&.dig('logging', 'file') || 'log/hermitclaw.log'
       FileUtils.mkdir_p(File.dirname(log_path))
 
       logger = Logger.new(log_path)

@@ -23,15 +23,13 @@ module HermitClaw
 
       # Redact anything that looks like a secret
       redacted = response
-        .gsub(/sk-[a-zA-Z0-9\-_]{20,}/, "[REDACTED]")
-        .gsub(/xoxb-[a-zA-Z0-9\-]+/, "[REDACTED]")
-        .gsub(/MTQ[a-zA-Z0-9\._\-]{50,}/, "[REDACTED]")
+                 .gsub(/sk-[a-zA-Z0-9\-_]{20,}/, '[REDACTED]')
+                 .gsub(/xoxb-[a-zA-Z0-9-]+/, '[REDACTED]')
+                 .gsub(/MTQ[a-zA-Z0-9._-]{50,}/, '[REDACTED]')
 
       # Check max response length
-      max_length = @rules["max_response_length"]
-      if max_length && redacted.length > max_length
-        redacted = redacted[0...max_length] + "\n\n(response truncated)"
-      end
+      max_length = @rules['max_response_length']
+      redacted = "#{redacted[0...max_length]}\n\n(response truncated)" if max_length && redacted.length > max_length
 
       redacted
     end
@@ -39,10 +37,10 @@ module HermitClaw
     private
 
     def blocked_patterns
-      patterns = @rules&.dig("blocked_patterns") || []
+      patterns = @rules&.dig('blocked_patterns') || []
       patterns.map { |p| Regexp.new(p, Regexp::IGNORECASE) }
     rescue RegexpError => e
-      $stderr.puts "Invalid guardrail pattern: #{e.message}"
+      warn "Invalid guardrail pattern: #{e.message}"
       []
     end
   end

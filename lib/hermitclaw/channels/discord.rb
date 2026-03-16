@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "discordrb"
+require 'discordrb'
 
 module HermitClaw
   module Channels
@@ -33,12 +33,12 @@ module HermitClaw
             message: content
           )
 
-          @logger&.info("OUT [##{channel}] → @#{user}: #{response[0..200]}#{"..." if response.length > 200}")
+          @logger&.info("OUT [##{channel}] → @#{user}: #{response[0..200]}#{'...' if response.length > 200}")
 
           send_split(event, response)
         end
 
-        puts "🐚 HermitClaw is online (Discord)"
+        puts '🐚 HermitClaw is online (Discord)'
         @bot.run
       end
 
@@ -49,7 +49,7 @@ module HermitClaw
       private
 
       def strip_mentions(text)
-        text.gsub(/<@!?\d+>/, "").strip
+        text.gsub(/<@!?\d+>/, '').strip
       end
 
       def send_split(event, text)

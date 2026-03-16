@@ -5,7 +5,7 @@ module HermitClaw
     class Shared
       def initialize(path)
         @path = path
-        @content = File.exist?(path) ? File.read(path) : ""
+        @content = File.exist?(path) ? File.read(path) : ''
       end
 
       def to_s = @content

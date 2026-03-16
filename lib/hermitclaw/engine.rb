@@ -2,7 +2,7 @@
 
 module HermitClaw
   class Engine
-    def initialize(config_path: "config.yml")
+    def initialize(config_path: 'config.yml')
       @config = Config.new(config_path)
       @logger = AppLogger.build(@config.data)
       @soul = Memory::Soul.new(@config.soul_path)
@@ -23,7 +23,7 @@ module HermitClaw
       @scheduler.start
 
       # Start webhook server if configured
-      if @config.data.dig("channels", "webhook")
+      if @config.data.dig('channels', 'webhook')
         @webhook = Channels::Webhook.new(
           agent: @agent, config: @config.data, logger: @logger
         )
@@ -38,7 +38,7 @@ module HermitClaw
         discord.start
       else
         # No Discord, keep process alive for webhook
-        puts "🐚 Running in webhook-only mode"
+        puts '🐚 Running in webhook-only mode'
         sleep
       end
     end
