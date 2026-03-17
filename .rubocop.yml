@@ -37,5 +37,9 @@ Metrics/BlockLength:
     - "test/**/*"
     - "Rakefile"
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'lib/hermitclaw/cli.rb'
+
 Minitest/MultipleAssertions:
   Max: 6

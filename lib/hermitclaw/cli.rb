@@ -5,6 +5,7 @@ require_relative '../hermitclaw'
 module HermitClaw
   module CLI
     TEMPLATES_DIR = File.expand_path('../../templates', __dir__)
+    PID_FILE = 'tmp/hermitclaw.pid'
 
     def self.run(args)
       command = args.first
@@ -14,6 +15,10 @@ module HermitClaw
         init(args[1])
       when 'start'
         start
+      when 'stop'
+        stop
+      when 'status'
+        status
       when 'version', '-v', '--version'
         puts "hermitclaw #{HermitClaw::VERSION}"
       else
@@ -60,7 +65,51 @@ module HermitClaw
         exit 1
       end
 
+      write_pid
+      at_exit { remove_pid }
+
+      Signal.trap('INT') { exit }
+      Signal.trap('TERM') { exit }
+
       Engine.new.start
+    end
+
+    def self.stop
+      pid = read_pid
+      unless pid
+        warn 'HermitClaw is not running (no PID file found).'
+        exit 1
+      end
+
+      begin
+        Process.kill('TERM', pid)
+        puts "🐚 HermitClaw stopped (PID: #{pid})"
+        remove_pid
+      rescue Errno::ESRCH
+        warn "Process #{pid} not found. Removing stale PID file."
+        remove_pid
+      rescue Errno::EPERM
+        warn "Permission denied to stop process #{pid}."
+        exit 1
+      end
+    end
+
+    def self.status
+      pid = read_pid
+      unless pid
+        puts '🐚 HermitClaw is not running.'
+        return
+      end
+
+      begin
+        Process.kill(0, pid)
+        puts "🐚 HermitClaw is running (PID: #{pid})"
+      rescue Errno::ESRCH
+        puts '🐚 HermitClaw is not running (stale PID file).'
+        remove_pid
+      rescue Errno::EPERM
+        puts "🐚 HermitClaw is running (PID: #{pid}, different user)"
+      end
     end
 
     def self.usage
@@ -70,9 +119,29 @@ module HermitClaw
         Commands:
           init [dir]   Create a new HermitClaw project
           start        Start the bot (requires config.yml)
+          stop         Stop the running bot
+          status       Show whether the bot is running
           version      Show version
 
       USAGE
     end
+
+    def self.write_pid
+      FileUtils.mkdir_p(File.dirname(PID_FILE))
+      File.write(PID_FILE, Process.pid.to_s)
+    end
+
+    def self.read_pid
+      return nil unless File.exist?(PID_FILE)
+
+      pid = File.read(PID_FILE).strip.to_i
+      pid.positive? ? pid : nil
+    end
+
+    def self.remove_pid
+      FileUtils.rm_f(PID_FILE)
+    end
+
+    private_class_method :write_pid, :read_pid, :remove_pid
   end
 end
